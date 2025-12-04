@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCB Clarify - Guia da Congregação Cristã</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluindo Feather Icons para ícones modernos -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        // Configuração de cores personalizadas do Tailwind
+        tailwind.config = {
+            darkMode: 'class', // Habilita o dark mode baseado na classe 'dark' no <html>
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#E6F0FF', // Azul claro
+                            main: '#3A7BD5', // Azul principal
+                            dark: '#1E3A8A', // Azul escuro
+                            // Cores para Dark Mode
+                            text_dark: '#CBD5E1', // Gray 300
+                            bg_dark: '#1E293B',   // Slate 800
+                            card_dark: '#334155'  // Slate 700
+                        }
+                    }
+                }
+            }
+        }
+
+        // Script para gerenciar o Dark Mode
+        function setupDarkMode() {
+            const html = document.documentElement;
+            const toggleButton = document.getElementById('dark-mode-toggle');
+
+            // 1. Aplicar a preferência salva ou o modo de sistema
+            const storedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            let isDark = storedTheme === 'dark' || (!storedTheme && systemPrefersDark);
+
+            if (isDark) {
+                html.classList.add('dark');
+            }
+
+            // 2. Função de alternância
+            window.toggleDarkMode = function() {
+                isDark = !html.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateToggleButtonIcon(isDark);
+            }
+
+            // 3. Função para atualizar o ícone
+            function updateToggleButtonIcon(isDarkCurrent) {
+                if (toggleButton) {
+                    toggleButton.innerHTML = isDarkCurrent 
+                        ? '<i data-feather="sun" class="w-6 h-6"></i>' 
+                        : '<i data-feather="moon" class="w-6 h-6"></i>';
+                    feather.replace();
+                }
+            }
+            
+            // 4. Inicializa o ícone corretamente
+            updateToggleButtonIcon(isDark);
+        }
+
+        document.addEventListener('DOMContentLoaded', setupDarkMode);
+    </script>
+    <!-- Definindo a fonte Inter para melhor estética -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Transição para o modo noturno/diurno */
+            transition: background-color 0.3s ease; 
+        }
+
+        /* Estilos específicos para Dark Mode */
+        .dark body {
+            background-color: #0F172A; /* Slate 900 */
+            color: #E2E8F0; /* Slate 200 */
+        }
+        .dark .bg-white {
+            background-color: #1E293B; /* Slate 800 */
+        }
+        .dark .text-gray-700, .dark .text-gray-600 {
+            color: #CBD5E1; /* Slate 300 */
+        }
+        .dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Garantir que o negrito dentro dos parágrafos funcione */
+        strong {
+            font-weight: 700; /* Força o negrito para a tag strong */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-slate-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo/Título -->
+                <div class="text-2xl font-bold text-primary-dark dark:text-white">CCB Clarify</div>
+                
+                <!-- Links de Navegação (Atualizados) -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#inicio" class="text-gray-700 dark:text-primary-text_dark hover:text-primary-main transition duration-150">Início</a>
+                    <a href="#doutrina" class="text-gray-700 dark:text-primary-text_dark hover:text-primary-main transition duration-150">Doutrinas</a>
+                    <a href="#fundamentos-biblicos" class="text-gray-700 dark:text-primary-main hover:text-primary-main transition duration-150">Fundamentos</a>
+                    <a href="#perguntas-frequentes" class="text-gray-700 dark:text-primary-text_dark hover:text-primary-main transition duration-150">Perguntas Frequentes</a>
+                </div>
+                
+                <!-- Botão de alternância Dark Mode -->
+                <button id="dark-mode-toggle" onclick="toggleDarkMode()" 
+                        class="text-gray-600 dark:text-primary-text_dark hover:text-primary-main dark:hover:text-primary-main transition duration-150 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 focus:outline-none">
+                    <!-- Ícone será inserido pelo JS -->
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section (Início) -->
+        <section id="inicio" class="bg-gradient-to-r from-primary-dark to-primary-main text-white rounded-xl p-12 mb-12 shadow-2xl">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl font-extrabold mb-6">Bem-vindo ao CCB Clarify</h1>
+                <p class="text-2xl mb-4 font-light">Fundados em Cristo, a Pedra Angular</p>
+                <p class="text-lg mb-8 opacity-90 italic">"Porque ninguém pode pôr outro fundamento, além do que já está posto, o qual é Jesus Cristo." - 1 Coríntios 3:11</p>
+                <a href="#explorar" class="bg-white text-primary-dark font-semibold px-8 py-4 rounded-lg hover:bg-gray-100 transition duration-300 inline-block shadow-lg transform hover:scale-105">
+                    Explorar Conteúdos
+                </a>
+            </div>
+        </section>
+
+        <!-- Visão Cristocêntrica -->
+        <section class="mb-16 bg-white dark:bg-primary-bg_dark rounded-xl p-8 shadow-md transition-colors duration-300">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold mb-6 text-center text-primary-dark dark:text-white">Nossa Visão Cristocêntrica</h2>
+                <div class="prose max-w-none text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                    <p class="mb-4 text-lg">
+                        A Congregação Cristã no Brasil fundamenta-se inteiramente em <strong>Cristo Jesus</strong>, 
+                        nosso único Senhor e Salvador. Como está escrito em Atos 4:12: <em>"E em nenhum outro há salvação, 
+                        porque também debaixo do céu nenhum outro nome há, dado entre os homens, pelo qual devamos ser salvos."</em>
+                    </p>
+                    <p class="mb-4">
+                        Nossa fé não se baseia em tradições humanas ou filosofias mundanas, mas na <strong>Palavra de Deus</strong>, 
+                        inspirada pelo Espírito Santo. Seguimos o modelo da igreja primitiva, conforme descrito no livro de Atos, 
+                        onde os primeiros cristãos "perseveravam na doutrina dos apóstolos, e na comunhão, e no partir do pão, 
+                        e nas orações" (Atos 2:42).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fundamentos Bíblicos -->
+        <section id="fundamentos-biblicos" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center text-primary-dark dark:text-white">Fundamentos Bíblicos</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Fundamento 1 -->
+                <div class="bg-white dark:bg-primary-bg_dark rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <i data-feather="book-open" class="w-8 h-8 text-primary-main mr-3"></i>
+                        <h3 class="text-xl font-bold text-primary-dark dark:text-primary-text_dark">Sola Scriptura</h3>
+                    </div>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        A Bíblia Sagrada é nossa única regra de fé e prática. "Toda a Escritura é divinamente inspirada, 
+                        e proveitosa para ensinar, para redargüir, para corrigir, para instruir em justiça" (2 Timóteo 3:16).
+                    </p>
+                    <p class="text-gray-600 dark:text-slate-400 text-sm italic">
+                        Rejeitamos qualquer tradição ou ensinamento que contradiga as Escrituras Sagradas.
+                    </p>
+                </div>
+
+                <!-- Fundamento 2 -->
+                <div class="bg-white dark:bg-primary-bg_dark rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <i data-feather="heart" class="w-8 h-8 text-primary-main mr-3"></i>
+                        <h3 class="text-xl font-bold text-primary-dark dark:text-primary-text_dark">Salvação pela Graça</h3>
+                    </div>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        Somos salvos unicamente pela graça de Deus, mediante a fé em Jesus Cristo. "Porque pela graça sois salvos, 
+                        por meio da fé; e isto não vem de vós, é dom de Deus" (Efésios 2:8).
+                    </p>
+                    <p class="text-gray-600 dark:text-slate-400 text-sm italic">
+                        Nenhuma obra humana pode nos salvar, apenas o sacrifício perfeito de Cristo na cruz.
+                    </p>
+                </div>
+
+                <!-- Fundamento 3 -->
+                <div class="bg-white dark:bg-primary-bg_dark rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <i data-feather="droplet" class="w-8 h-8 text-primary-main mr-3"></i>
+                        <h3 class="text-xl font-bold text-primary-dark dark:text-primary-text_dark">Batismo Bíblico</h3>
+                    </div>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        Praticamos o batismo por imersão, em nome do Pai, do Filho e do Espírito Santo, conforme ordenado 
+                        por Jesus: "Portanto ide, fazei discípulos de todas as nações, batizando-os..." (Mateus 28:19).
+                    </p>
+                    <p class="text-gray-600 dark:text-slate-400 text-sm italic">
+                        O batismo é um ato de obediência e testemunho público da fé em Cristo.
+                    </p>
+                </div>
+
+                <!-- Fundamento 4 -->
+                <div class="bg-white dark:bg-primary-bg_dark rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <i data-feather="wind" class="w-8 h-8 text-primary-main mr-3"></i>
+                        <h3 class="text-xl font-bold text-primary-dark dark:text-primary-text_dark">Batismo com Espírito Santo</h3>
+                    </div>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        Cremos no batismo com o Espírito Santo, com evidência do falar em línguas, conforme prometido 
+                        por Jesus e manifestado no Dia de Pentecostes (Atos 2:4).
+                    </p>
+                    <p class="text-gray-600 dark:text-slate-400 text-sm italic">
+                        O Espírito Santo capacita os crentes para o serviço cristão e vida santificada.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Doutrina -->
+        <section id="doutrina" class="mb-16 bg-primary-light dark:bg-primary-card_dark rounded-xl p-8 transition-colors duration-300">
+            <h2 class="text-3xl font-bold mb-8 text-center text-primary-dark dark:text-white">Princípios Doutrinários</h2>
+            
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="bg-white dark:bg-primary-bg_dark rounded-lg p-6 shadow-md transition-colors duration-300">
+                    <h3 class="text-2xl font-bold mb-4 text-primary-dark dark:text-primary-text_dark">1. A Trindade Divina</h3>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        Cremos em um só Deus eternamente subsistente em três pessoas: Pai, Filho e Espírito Santo. 
+                        "Portanto ide, fazei discípulos de todas as nações, batizando-os em nome do Pai, e do Filho, 
+                        e do Espírito Santo" (Mateus 28:19).
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-slate-400 space-y-2 ml-4">
+                        <li><strong>Deus Pai:</strong> Criador de todas as coisas, soberano e eterno</li>
+                        <li><strong>Jesus Cristo:</strong> Filho de Deus, nosso Salvador e único mediador</li>
+                        <li><strong>Espírito Santo:</strong> Consolador, que guia em toda verdade</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white dark:bg-primary-bg_dark rounded-lg p-6 shadow-md transition-colors duration-300">
+                    <h3 class="text-2xl font-bold mb-4 text-primary-dark dark:text-primary-text_dark">2. A Igreja de Cristo</h3>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        A igreja é o corpo de Cristo, composta por todos os que genuinamente creem Nele. 
+                        "E ele é a cabeça do corpo, da igreja; é o princípio e o primogênito dentre os mortos, 
+                        para que em tudo tenha a preeminência" (Colossenses 1:18).
+                    </p>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        A Congregação Cristã no Brasil busca seguir fielmente o padrão bíblico da igreja primitiva, 
+                        mantendo a simplicidade do Evangelho e a pureza doutrinária, sem acréscimos humanos ou tradições 
+                        que contradigam a Palavra de Deus.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-primary-bg_dark rounded-lg p-6 shadow-md transition-colors duration-300">
+                    <h3 class="text-2xl font-bold mb-4 text-primary-dark dark:text-primary-text_dark">3. Vida Santa e Santificação</h3>
+                    <p class="text-gray-700 dark:text-primary-text_dark mb-3">
+                        "Segui a paz com todos, e a santificação, sem a qual ninguém verá o Senhor" (Hebreus 12:14). 
+                        Somos chamados para viver uma vida separada do mundo, em santidade e retidão.
+                    </p>
+                    <p class="text-gray-700 dark:text-primary-text_dark">
+                        Isso não significa isolamento social, mas uma vida que glorifica a Deus através de escolhas 
+                        que refletem o caráter de Cristo, rejeitando o pecado e buscando a santidade em amor e obediência.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conteúdos em Destaque -->
+        <section id="explorar" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center text-primary-dark dark:text-white">Conteúdos em Destaque</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <article class="bg-white dark:bg-primary-bg_dark rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                        <i data-feather="book" class="w-16 h-16 text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-primary-main font-semibold">DOUTRINA</span>
+                        <h3 class="text-xl font-bold my-2 text-primary-dark dark:text-primary-text_dark">A Suficiência de Cristo</h3>
+                        <p class="text-gray-600 dark:text-slate-400 mb-4">
+                            Por que Jesus Cristo é tudo o que precisamos para salvação e vida eterna. 
+                            Explorando João 14:6 e a exclusividade do Evangelho.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="bg-white dark:bg-primary-bg_dark rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                        <i data-feather="users" class="w-16 h-16 text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-primary-main font-semibold">COMUNHÃO</span>
+                        <h3 class="text-xl font-bold my-2 text-primary-dark dark:text-primary-text_dark">A Igreja Primitiva como Modelo</h3>
+                        <p class="text-gray-600 dark:text-slate-400 mb-4">
+                            Como a CCB busca refletir a simplicidade e pureza da igreja descrita 
+                            em Atos dos Apóstolos.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="bg-white dark:bg-primary-bg_dark rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                        <i data-feather="compass" class="w-16 h-16 text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-primary-main font-semibold">ORIENTAÇÃO</span>
+                        <h3 class="text-xl font-bold my-2 text-primary-dark dark:text-primary-text_dark">Vivendo pela Palavra</h3>
+                        <p class="text-gray-600 dark:text-slate-400 mb-4">
+                            Princípios bíblicos para uma vida cristã autêntica e agradável a Deus 
+                            no mundo contemporâneo.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção Perguntas Frequentes (EXPANDIDA E CORRIGIDA) -->
+        <section id="perguntas-frequentes" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center text-primary-dark dark:text-white">Perguntas Frequentes</h2>
+            
+            <div class="max-w-5xl mx-auto space-y-4">
+                
+                <!-- Subseção: Doutrina e Crenças -->
+                <h3 class="text-2xl font-bold pt-4 pb-2 text-primary-main border-b border-primary-light dark:border-slate-700">Doutrina e Crenças</h3>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        O CCB é considerado a única igreja verdadeira ou o único caminho para a salvação?
+                    </summary>
+                    <div class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed space-y-4">
+                        
+                        <h4 class="text-xl font-semibold text-primary-dark dark:text-white">Fundamentação Bíblica e Doutrinária da Posição da CCB sobre a Salvação e a Igreja</h4>
+                        <p>A Congregação Cristã no Brasil, em estrita fidelidade às Sagradas Escrituras, mantém uma posição clara e cristocêntrica sobre o caminho da salvação e a identidade da verdadeira igreja. É essencial distinguir entre a unicidade do caminho da salvação (que é <strong>exclusivamente Cristo</strong>) e a manifestação visível da igreja que segue Seus mandamentos.</p>
+                        
+                        <h4 class="text-xl font-semibold mt-6 mb-2 text-primary-dark dark:text-white">1. O Único Caminho para a Salvação: Jesus Cristo</h4>
+                        <p>A CCB afirma, com absoluta convicção bíblica, que há um só caminho para a salvação:</p>
+                        <blockquote class="border-l-4 border-primary-main pl-4 py-1 italic bg-gray-50 dark:bg-slate-700/50 rounded">
+                            <p>"Disse-lhe Jesus: Eu sou o caminho, e a verdade e a vida; ninguém vem ao Pai, senão por mim." (João 14:6)</p>
+                            <p>"E em nenhum outro há salvação, porque também debaixo do céu nenhum outro nome há, dado entre os homens, pelo qual devamos ser salvos." (Atos 4:12)</p>
+                        </blockquote>
+                        <p>Portanto, a salvação não é por denominação, instituição ou prática religiosa, mas unicamente pela graça, mediante a fé em Jesus Cristo (Efésios 2:8-9). Qualquer ideia contrária seria heresia.</p>
+                        
+                        <h4 class="text-xl font-semibold mt-6 mb-2 text-primary-dark dark:text-white">2. A Verdadeira Igreja: O Corpo de Cristo, Não uma Organização Humana</h4>
+                        <p>A CCB entende que a "única igreja verdadeira" é o Corpo espiritual de Cristo, composto por todos os verdadeiramente remidos pelo Seu sangue, independentemente de afiliação denominacional visível:</p>
+                        <blockquote class="border-l-4 border-primary-main pl-4 py-1 italic bg-gray-50 dark:bg-slate-700/50 rounded">
+                            <p>"Porque, assim como o corpo é um, e tem muitos membros, e todos os membros, sendo muitos, são um só corpo, assim é Cristo também." (1 Coríntios 12:12)</p>
+                            <p>"Há um só corpo e um só Espírito, como também fostes chamados em uma só esperança da vossa vocação." (Efésios 4:4)</p>
+                        </blockquote>
+                        <p>Esse corpo é invisível aos olhos humanos (conhecido somente por Deus) e se manifesta na terra através de congregações locais que professam a fé genuína e obedecem aos mandamentos bíblicos.</p>
+                        
+                        <h4 class="text-xl font-semibold mt-6 mb-2 text-primary-dark dark:text-white">3. O Papel da CCB como Congregação Fiel</h4>
+                        <p>A CCB não proclama ser a única organização com salvos, mas crê ser uma congregação que busca restaurar e praticar integralmente o modelo doutrinário e de culto da igreja primitiva, rejeitando inovações humanas e tradições não-bíblicas. Sua missão é ser fiel ao padrão apostólico, como guardiã da <strong>"sã doutrina"</strong>:</p>
+                        <blockquote class="border-l-4 border-primary-main pl-4 py-1 italic bg-gray-50 dark:bg-slate-700/50 rounded">
+                            <p>"Ó Timóteo, guarda o depósito que te foi confiado, tendo horror aos clamores vãos e profanos e às oposições da falsamente chamada ciência." (1 Timóteo 6:20)</p>
+                        </blockquote>
+                        <p>Portanto, a CCB não se considera a "única igreja verdadeira" no sentido exclusivista de que apenas seus membros serão salvos, mas crê ser uma expressão visível e fiel da igreja de Cristo na terra, mantendo:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>A doutrina apostólica (Atos 2:42)</li>
+                            <li>A prática do batismo bíblico (Mateus 28:19)</li>
+                            <li>A observância da Santa Ceia e do lava-pés (1 Coríntios 11:23-26; João 13:14-15)</li>
+                            <li>O governo por anciãos e diáconos (1 Timóteo 3:1-13)</li>
+                            <li>O culto em espírito e em verdade (João 4:24)</li>
+                            <li>A vida separada do mundo (2 Coríntios 6:17)</li>
+                        </ul>
+                        
+                        <h4 class="text-xl font-semibold mt-6 mb-2 text-primary-dark dark:text-white">4. A Postura em Relação a Outros Grupos Cristãos</h4>
+                        <p>A CCB evita o ecumenismo que dilui a doutrina, mantendo-se separada de movimentos que, em sua avaliação, divergem dos fundamentos bíblicos. No entanto, reconhece que Deus tem seus verdadeiros servos em diversos lugares (Atos 10:34-35), mesmo onde há erro doutrinário parcial. A salvação é juízo soberano de Deus, que vê o coração:</p>
+                        <blockquote class="border-l-4 border-primary-main pl-4 py-1 italic bg-gray-50 dark:bg-slate-700/50 rounded">
+                            <p>"Mas o fundamento de Deus fica firme, tendo este selo: O Senhor conhece os que são seus, e qualquer que profere o nome de Cristo aparte-se da iniquidade." (2 Timóteo 2:19)</p>
+                        </blockquote>
+                        
+                        <h4 class="text-xl font-semibold mt-6 mb-2 text-primary-dark dark:text-white">5. Conclusão: Fidelidade ao Padrão Bíblico sem Juízo Infalibilista</h4>
+                        <p>Em resumo:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li><strong>Salvação:</strong> Só por Jesus Cristo, mediante fé genuína e arrependimento.</li>
+                            <li><strong>Igreja Verdadeira:</strong> O Corpo invisível de Cristo, composto por todos os salvos.</li>
+                            <li><strong>CCB:</strong> Uma congregação que, por convicção bíblica, busca ser fiel ao padrão neotestamentário, considerando-se parte da verdadeira igreja, mas não se arroga o direito de julgar quem é ou não salvo em outras comunidades.</li>
+                            <li><strong>Responsabilidade:</strong> Manter a pureza doutrinária e prática, pregando o evangelho completo, deixando o julgamento final a Deus.</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-primary-main pl-4 py-1 italic bg-gray-50 dark:bg-slate-700/50 rounded">
+                            <p>"Porque nós somos cooperadores de Deus; vós sois lavoura de Deus e edifício de Deus." (1 Coríntios 3:9)</p>
+                            <p>"Aquele, pois, que pensa estar em pé, olhe não caia." (1 Coríntios 10:12)</p>
+                        </blockquote>
+                        <p>A CCB enfatiza a responsabilidade de cada crente em perseverar na fé e na obediência, confiando na misericórdia de Deus, que é o único Juiz justo.</p>
+                    </div>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        O batismo em água é considerado essencial para a salvação?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A salvação é unicamente pela graça, mediante a fé em Jesus Cristo (Efésios 2:8). 
+                        No entanto, o batismo em água por imersão é uma <strong>ordenança de Cristo</strong> e um 
+                        testemunho público de arrependimento e fé (Mateus 28:19; Marcos 16:16). A Bíblia mostra que o 
+                        batismo segue a fé. Ele não é o meio de obter a salvação (que é a fé), mas é um ato de 
+                        obediência indispensável para o crente que deseja seguir os mandamentos do Senhor, 
+                        simbolizando a morte para o pecado e a ressurreição para uma nova vida em Cristo 
+                        (Romanos 6:4).
+                    </p>
+                </details>
+                
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        A CCB confirma o batismo feito em outras denominações evangélicas?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Não. Para manter a uniformidade da fé e do testemunho, e assegurar que o ato seja 
+                        realizado conforme a sã doutrina estabelecida (por imersão, em nome do Pai, Filho 
+                        e Espírito Santo), a CCB realiza um novo batismo para aqueles que vêm de outras 
+                        denominações. A validade do batismo está ligada à adesão integral aos ensinamentos 
+                        de Cristo, conforme a compreensão e a ordem bíblica adotada pela CCB, evitando o 
+                        "fermento" de doutrinas estranhas (Gálatas 5:9).
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        A igreja acredita na doutrina da Trindade (Pai, Filho e Espírito Santo)?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Sim. Cremos no Deus triúno, eternamente subsistente em três Pessoas: o Pai, o Filho 
+                        (Jesus Cristo) e o Espírito Santo, sendo um só Deus. Esta crença é fundamentada na 
+                        Grande Comissão: <strong>"...batizando-os em nome do Pai, e do Filho, e do Espírito Santo"</strong> (Mateus 28:19), e em passagens como 1 João 5:7. A unidade da Trindade é central para 
+                        a nossa compreensão de Deus.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        O que é uma "revelação" na CCB, e ela se sobrepõe à Bíblia?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A "revelação" é entendida como a manifestação do Espírito Santo por meio dos dons 
+                        espirituais (1 Coríntios 12). Ela é usada para edificação, exortação e consolação 
+                        (1 Coríntios 14:3). A revelação nunca se sobrepõe à Bíblia. A Palavra de Deus 
+                        é a nossa única regra de fé e prática (<strong>Sola Scriptura</strong>). Toda revelação deve 
+                        ser julgada e confirmada pelas Escrituras (1 Tessalonicenses 5:21), pois a Bíblia 
+                        é a Palavra completa e final de Deus para a doutrina.
+                    </p>
+                </details>
+                
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Existe uma crença em "pecado de morte" que não tem perdão ou reconciliação na igreja?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A CCB faz referência ao "pecado para a morte" encontrado em 1 João 5:16. Isso 
+                        se refere ao pecado que leva o crente a uma apostasia completa, a ponto de não 
+                        haver mais arrependimento, caracterizando uma blasfêmia contra o Espírito Santo 
+                        (Mateus 12:31), que é o pecado imperdoável. Enfatizamos que, para o crente em 
+                        sincero arrependimento, há perdão em Cristo, que é o nosso Advogado (1 João 2:1). 
+                        O pecado de morte é a rejeição persistente da verdade e da graça de Deus.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        A CCB tem uma teologia reformada ou pentecostal?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A CCB não se encaixa estritamente em um único rótulo teológico. Possui características 
+                        dos movimentos pentecostais (crença nos dons espirituais, batismo com o Espírito Santo), 
+                        mas também adota o princípio de <strong>Sola Scriptura</strong> (base da Reforma) e uma estrutura 
+                        eclesiástica única (ministério não-remunerado e não-hierárquico). Sua teologia é 
+                        pragmática e focada na obediência literal à Palavra, buscando a simplicidade dos 
+                        apóstolos e o ensino de Cristo.
+                    </p>
+                </details>
+                
+                <!-- Subseção: Trajes e Práticas -->
+                <h3 class="text-2xl font-bold pt-6 pb-2 text-primary-main border-b border-primary-light dark:border-slate-700">Trajes e Práticas</h3>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Por que as mulheres precisam usar véu durante os cultos e orações?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        O uso do véu é uma prática de obediência a 1 Coríntios 11:5-6, onde Paulo instrui 
+                        as mulheres a cobrirem a cabeça ao orar ou profetizar. Na CCB, ele é entendido 
+                        como um <strong>sinal de submissão e reverência a Deus</strong> e de modéstia durante os atos 
+                        de adoração e oração, e não como um sinal de inferioridade. É uma questão de 
+                        tradição apostólica observada em obediência à Palavra.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        As mulheres podem usar calças compridas, maquiagem ou cortar o cabelo?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        O foco doutrinário é na <strong>modéstia</strong> e no <strong>bom testemunho</strong> (1 Timóteo 2:9). 
+                        As vestes devem refletir a distinção entre os sexos, conforme Deuteronômio 22:5. 
+                        A CCB orienta as irmãs a priorizarem saias e vestidos. Quanto a maquiagem e corte 
+                        de cabelo, o princípio bíblico é evitar a vaidade e a ostentação excessiva (1 Pedro 3:3-4), 
+                        mantendo a modéstia e o foco na beleza interior, que é a santidade.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Por que o CCB não comemora o Natal, a Páscoa ou outros feriados religiosos?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Baseamo-nos em Romanos 14:5-6, que ensina sobre a liberdade de julgar dias. 
+                        A CCB busca adorar a Deus em espírito e em verdade <strong>todos os dias</strong> (João 4:24), 
+                        sem se prender a calendários ou datas especiais que não foram ordenadas por Jesus 
+                        ou pelos apóstolos do Novo Testamento. Esta prática visa evitar a mistura de 
+                        tradições humanas ou de origem pagã com a verdadeira adoração cristã.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        A CCB proíbe o uso de barba ou bigode para os homens?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Não há uma proibição doutrinária explícita na CCB. No entanto, a igreja orienta os 
+                        irmãos a manterem uma aparência que reflita a sobriedade, o bom senso e o bom 
+                        testemunho (1 Timóteo 3:7), evitando excessos ou modismos que possam desviar 
+                        a atenção da santidade. É uma questão de ordem e decência, e não um mandamento de salvação.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        É permitido assistir televisão, ir ao cinema ou ouvir música secular?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        O crente é exortado a se concentrar em tudo o que é verdadeiro, honesto, justo, 
+                        puro e amável (Filipenses 4:8). A CCB orienta fortemente a evitar entretenimento 
+                        e mídias que glorifiquem o pecado, a violência ou a sensualidade, pois podem 
+                        corromper a alma. O princípio é: <strong>"Todas as coisas me são lícitas, mas nem 
+                        todas as coisas convêm; todas as coisas me são lícitas, mas nem todas as coisas 
+                        edificam"</strong> (1 Coríntios 10:23).
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Por que a igreja não realiza evidências ao vivo ou gravação dos cultos?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Evitamos a gravação ou transmissão para preservar a <strong>intimidade e a reverência</strong> do culto a Deus, que deve ser em espírito e em verdade (João 4:24), longe da 
+                        ostentação e do espetáculo. A ênfase é na busca pessoal por Deus, e não na 
+                        popularidade ou na performance (Mateus 6:5-6). Acreditamos que a manifestação 
+                        do Espírito Santo deve ser genuína e não para exibição pública.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        O CCB envolve-se em política ou incentiva os membros a votarem em determinados candidatos?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A CCB, como instituição, mantém-se neutra em questões político-partidárias, 
+                        focando-se unicamente na obra espiritual de Cristo (João 18:36). Os membros 
+                        têm o dever cívico de votar, mas são incentivados a buscar a orientação de 
+                        Deus (Tiago 1:5) e a escolher candidatos que melhor representem os valores 
+                        morais e éticos cristãos, sem qualquer imposição da liderança.
+                    </p>
+                </details>
+                
+                <!-- Subseção: Organização e Finanças -->
+                <h3 class="text-2xl font-bold pt-6 pb-2 text-primary-main border-b border-primary-light dark:border-slate-700">Organização e Finanças</h3>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Por que o CCB não tem pastores remunerados ou formados em seminários teológicos?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Adotamos o modelo de <strong>ministério voluntário</strong>, seguindo o exemplo dos apóstolos 
+                        que se sustentavam pelo próprio trabalho (Atos 20:34; 1 Coríntios 9:18). Cremos 
+                        que o chamado para o ministério é um <strong>dom espiritual de Deus</strong> (1 Coríntios 12:28), 
+                        e não uma profissão adquirida por formação acadêmica. Isso garante que o serviço 
+                        seja movido pelo amor e não por ganho financeiro (1 Pedro 5:2).
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Como a igreja se sustenta financeiramente se não cobra o dízimo?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A igreja se sustenta por meio de <strong>ofertas voluntárias</strong>, feitas com liberalidade 
+                        e sem imposição legalista do dízimo (que era uma lei da Antiga Aliança). A ênfase 
+                        é na doação feita com alegria e em segredo (2 Coríntios 9:7; Mateus 6:3-4). As 
+                        ofertas são depositadas em caixas ou urnas designadas para este fim.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Quem são os "anciães" e os "cooperadores" e qual a diferença entre eles?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        O <strong>Ancião</strong> (ou Antigo) é o principal líder espiritual da igreja, responsável por 
+                        pregar, batizar, ministrar a Santa Ceia e zelar pela doutrina (1 Timóteo 3:1-7). 
+                        O <strong>Cooperador de Ofício</strong> (ou apenas Cooperador) auxilia o ancião na condução 
+                        dos cultos e na assistência aos membros, mas não possui a mesma autoridade doutrinária 
+                        para realizar batismos ou a Santa Ceia. Ambos são escolhidos e confirmados por Deus.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Como são escolhidos os líderes (anciães, diáconos, etc.) da igreja?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Os líderes são escolhidos por <strong>manifestação do Espírito Santo</strong> (Atos 20:28), 
+                        confirmada pelo testemunho dos irmãos e o consenso do ministério (anciães). 
+                        O processo envolve muita oração e observação dos requisitos bíblicos para o ofício 
+                        (1 Timóteo 3; Tito 1). Não há eleição ou voto, mas sim a manifestação de Deus 
+                        escolhendo o seu servo para a Obra.
+                    </p>
+                </details>
+                
+                <!-- Subseção: Membros e Relacionamentos -->
+                <h3 class="text-2xl font-bold pt-6 pb-2 text-primary-main border-b border-primary-light dark:border-slate-700">Membros e Relacionamentos</h3>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Membros da CCB podem se casar com pessoas que não são da mesma fé?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        A CCB orienta os crentes a se casarem <strong>somente "no Senhor"</strong> (1 Coríntios 7:39), 
+                        o que significa casar-se com alguém que também é cristão e compartilha da mesma 
+                        fé e visão espiritual. O princípio de <strong>"jugo desigual"</strong> (2 Coríntios 6:14) é 
+                        fortemente aplicado, pois um casamento misto pode comprometer a comunhão, o culto 
+                        familiar e o crescimento espiritual do crente.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Por que muitas pessoas nascidas na CCB estão decidindo deixar a igreja?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        Ser "nascido na igreja" não garante a salvação. A vida cristã requer uma 
+                        <strong>conversão e um compromisso pessoal</strong> e sincero com Jesus Cristo, 
+                        independentemente da criação familiar (João 3:3). A CCB preza pela <strong>liberdade 
+                        de escolha</strong> e exorta todos a fazerem um firme compromisso com a Palavra. 
+                        A saída de membros, embora lamentada, é vista como parte da liberdade individual, 
+                        e a igreja continua a orar e a exortar a todos à permanência na sã doutrina.
+                    </p>
+                </details>
+
+                <details class="bg-white dark:bg-primary-bg_dark p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <summary class="font-bold text-lg cursor-pointer text-primary-dark dark:text-primary-text_dark">
+                        Como funciona a "excomunhão" ou o afastamento de membros que não seguem a doutrina?
+                    </summary>
+                    <p class="mt-4 text-gray-700 dark:text-primary-text_dark leading-relaxed">
+                        O termo utilizado é <strong>"afastamento"</strong> ou disciplina. É um ato extremo de disciplina 
+                        bíblica (1 Coríntios 5:11-13; Mateus 18:15-17), aplicado em casos de pecado público, 
+                        doutrina falsa ou conduta grave e não-arrependida. O objetivo é proteger a pureza 
+                        da igreja e, principalmente, levar o membro ao arrependimento e à restauração 
+                        espiritual (2 Tessalonicenses 3:14-15), agindo com amor e firmeza.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+
+        <!-- Versículos Fundamentais -->
+        <section class="mb-16 bg-white dark:bg-primary-bg_dark rounded-xl p-8 shadow-md transition-colors duration-300">
+            <h2 class="text-3xl font-bold mb-8 text-center text-primary-dark dark:text-white">Versículos Fundamentais</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="border-l-4 border-primary-main pl-4 py-2">
+                    <p class="text-gray-700 dark:text-primary-text_dark italic mb-2">
+                        "Porque ninguém pode pôr outro fundamento, além do que já está posto, o qual é Jesus Cristo."
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-slate-400">— 1 Coríntios 3:11</p>
+                </div>
+
+                <div class="border-l-4 border-primary-main pl-4 py-2">
+                    <p class="text-gray-700 dark:text-primary-text_dark italic mb-2">
+                        "Edificados sobre o fundamento dos apóstolos e dos profetas, de que Jesus Cristo é a principal pedra da esquina."
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-slate-400">— Efésios 2:20</p>
+                </div>
+
+                <div class="border-l-4 border-primary-main pl-4 py-2">
+                    <p class="text-gray-700 dark:text-primary-text_dark italic mb-2">
+                        "Jesus Cristo é o mesmo, ontem, e hoje, e eternamente."
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-slate-400">— Hebreus 13:8</p>
+                </div>
+
+                <div class="border-l-4 border-primary-main pl-4 py-2">
+                    <p class="text-gray-700 dark:text-primary-text_dark italic mb-2">
+                        "E em nenhum outro há salvação, porque também debaixo do céu nenhum outro nome há, dado entre os homens, pelo qual devamos ser salvos."
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-slate-400">— Atos 4:12</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final - Com Opções de Contato (Melhorado) -->
+        <section class="text-center py-12 bg-gradient-to-r from-primary-main to-primary-dark rounded-xl text-white shadow-xl">
+            <h2 class="text-3xl font-bold mb-4">Entre em Contato Conosco</h2>
+            <p class="text-xl mb-6 max-w-2xl mx-auto font-light">
+                Tem dúvidas sobre a fé cristã ou sobre a CCB? Estamos aqui para dialogar com amor e verdade.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <!-- Link WhatsApp (Cor Verde e Ícone) -->
+                <a href="https://wa.me/message/H3AT6GJGCPIZJ1" target="_blank" 
+                   class="flex items-center justify-center bg-green-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-green-600 transition duration-300 shadow-lg transform hover:scale-105">
+                    <i data-feather="message-circle" class="w-5 h-5 mr-2"></i>
+                    Enviar Pergunta via WhatsApp
+                </a>
+
+                <!-- Link E-mail (Cor Branca e Ícone) -->
+                <a href="mailto:ccbclarify@duck.com?subject=Pergunta%20sobre%20CCB%20Clarify"
+                   class="flex items-center justify-center bg-white text-primary-dark font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 shadow-lg transform hover:scale-105">
+                    <i data-feather="mail" class="w-5 h-5 mr-2"></i>
+                    Enviar perguntas e/ou e-mail
+                </a>
+            </div>
+            <p class="text-sm mt-4 opacity-75">Email: ccbclarify@duck.com</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white mt-16 py-8 transition-colors duration-300">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">&copy; 2024 CCB Clarify - Todos os direitos reservados</p>
+            <p class="text-sm text-gray-400 italic">
+                "Porque onde estiverem dois ou três reunidos em meu nome, aí estou eu no meio deles." - Mateus 18:20
+            </p>
+        </div>
+    </footer>
+
+    <!-- Inicializa os ícones do Feather Icons -->
+    <script>feather.replace();</script>
+</body>
+</html>
